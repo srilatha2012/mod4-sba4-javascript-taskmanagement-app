@@ -1,5 +1,6 @@
 
 let addTaskButton = document.getElementById("addTaskButton");
+let taskTableBody = document.getElementById("taskTableBody");
 
 let addTasks = [];
 
@@ -15,7 +16,9 @@ addTaskButton.addEventListener('click', function (event) {
     status: "In Progress"
   };
   pushObjects(task);
-  rendeorList();
+  renderList();
+
+  document.getElementById("taskForm").reset();
 }
 );
 
@@ -23,12 +26,18 @@ function pushObjects(task) {
   addTasks.push(task);
 }
 
-function rendeorList() {
-  for(let i=0; i< addTasks.length; i++ ) {
-    console.log(addTasks.length);
-    console.log(addTasks);
-    // let task =addTasks(i);
-     //console.log("tast : "+task);
+function renderList() {
+  console.log(addTasks);
+  taskTableBody.innerHTML = "";
+  for (let i = 0; i < addTasks.length; i++) {
+    let tableRow = document.createElement("tr");
+
+    for (let key in addTasks[i]) {
+      let tableData = document.createElement("td");
+      tableData.textContent = addTasks[i][key];
+      tableRow.appendChild(tableData);
+    }
+    taskTableBody.appendChild(tableRow);
 
   }
 }
