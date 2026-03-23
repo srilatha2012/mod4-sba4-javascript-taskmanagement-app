@@ -2,7 +2,10 @@
 let addTaskButton = document.getElementById("addTaskButton");
 let taskTableBody = document.getElementById("taskTableBody");
 let taskForm = document.getElementById("taskForm");
-
+let searchCategory = document.getElementById("searchCategory");
+let searchStatus = document.getElementById("searchStatus");
+searchCategory.addEventListener('change',filterTasks);
+searchStatus.addEventListener('change',filterTasks);
 
 let addTasks = [];
 
@@ -18,6 +21,7 @@ addTaskButton.addEventListener('click', function (event) {
     status: "In Progress"
   };
   pushObjects(task);
+  searchTaskByCategoryOrStatus();
   renderList();
 
   taskForm.reset();
@@ -40,19 +44,6 @@ function renderList() {
     <td>${addTasks[i].status}</td>
     <td><button onClick="editTask(${i})">Edit</button></td>
      `;
-
-    // for (let key in addTasks[i]) {
-    //   let tableData = document.createElement("td");
-    //   tableData.textContent = addTasks[i][key];
-    //   tableRow.appendChild(tableData);
-    // }
-    // let actionCell = document.createElement("td");
-    // let editButton = document.createElement("button");
-    // editButton.textContent = "Edit";
-    // editButton.classList.add("editButton");
-    // actionCell.appendChild(editButton);
-    // tableRow.appendChild(actionCell);
-
     taskTableBody.appendChild(tableRow);
 
   }
@@ -113,6 +104,53 @@ function updateTaskStatus() {
 
 }
 
+function searchTaskByCategoryOrStatus() {
+  searchCategory.innerHTML = `<option value="">All Categories</option>`;
+  let uniqueCategories = [];
+
+  for (let i = 0; i < addTasks.length; i++) {
+    if (!(uniqueCategories.includes(addTasks[i].category))) {
+      uniqueCategories.push(addTasks[i].category);
+      let option = document.createElement("option");
+      option.value = addTasks[i].category;
+      option.textContent = addTasks[i].category;
+      searchCategory.appendChild(option);
+    }
+
+  }
+  searchStatus.innerHTML = `
+  <option value="">All</option>
+  <option value="In Progress">In Progress</option>
+  <option value="Completed">Completed</option>
+  <option value="Overdue">Overdue</option>
+   `
+    ;
+
+}
+
+function filterTasks(){
+     let selectedCategory = searchCategory.value;
+     let selectedStatus = searchStatus.value;
+     taskTableBody.innerHTML = "";
+
+     for(let i=0; i< addTasks.length; i++){
+      let matchedCategory = selectedCategory === "" || addTasks[i].category === selectedCategory;
+      let matchedStatus =  selectedStatus === "" || addTasks[i].status === selectedStatus;
+      if(matchedCategory && matchedStatus) {
+       let tableRow = document.createElement("tr");
+
+       tableRow.innerHTML = `
+       <td>${addTasks[i].taskname}</td>
+       <td>${addTasks[i].category}</td>
+       <td>${addTasks[i].deadline}</td>
+       <td>${addTasks[i].status}</td>
+       <td><button onClick="editTask(${i})">Edit</button></td>
+       
+       `;
+       taskTableBody.appendChild(tableRow);
+      }
+     }
+}
 
 
 
