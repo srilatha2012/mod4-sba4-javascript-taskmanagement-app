@@ -3,37 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script defer src="index.js"></script>
+    <title>Task Management App</title>
+    <script defer src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <section>
         <div>
-            <form id ="taskForm" action="#" >
-                <label  for="taskName">TaskName:</label>
-                <input id ="taskname"  type="text" name="taskName">
+            <form id ="taskForm">
+                <label  for="taskname">Task Name:</label>
+                <input id ="taskname"  type="text" name="taskname" required>
                 <label  for="category">Category:</label>
-                <input id = "category" type="text" name="category"> 
+                <input id = "category" type="text" name="category" required> 
                 <label  for="deadLine">Deadline:</label>
-                <input id= "deadLine" type="date" name="deadLine"> 
+                <input id= "deadLine" type="date" name="deadLine" required> 
                 <button id="addTaskButton" type="button">Add Task</button> 
             </form>
         </div>
     </section>
     <section>
-       <label for="">Category:</label><select  id="searchCategory"></select>
-       <label for="">Status:</label><select  id="searchStatus"></select>
+       <label for="searchCategory">Category:</label>
+       <select  id="searchCategory"></select>
+
+       <label for="searchStatus">Status:</label>
+       <select  id="searchStatus"></select>
     </section>
     <section>
         <table>
             <thead>
               
                 <tr>
-                <th>task name</th>
-                <th>category</th>
-                <th>deadline</th>
-                <th>status</th>
+                <th>Task Name</th>
+                <th>Category</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Action</th>
                 </tr>
             
             </thead>
